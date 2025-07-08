@@ -1,25 +1,32 @@
 name: Metrics
+
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]           # real runs on merges into main
   schedule:
-    - cron: "0 0 * * *"
-  workflow_dispatch: {}
+    - cron: "0 0 * * *"          # daily updates at midnight CET
+  workflow_dispatch: {}          # manual trigger for testing
 
 permissions:
-  contents: write
-  actions: read
+  contents: read                # only need to checkout
+  pages: write                  # to deploy to GitHub Pages
+  id-token: write               # for provenance checks
 
 jobs:
-  metrics:
-    name: Metrics
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get GitHub App token
+        id: app_token
+        uses: peter-murray/workflow-application-token-action@v4
         with:
-          fetch-depth: 0
-      - name: GitHub metrics as SVG image
+          application_id: ${{ secrets.METRICS_APP_ID }}
+          application_private_key: ${{ secrets.METRICS_APP_PRIVATE_KEY }}
+
+      - name: Generate metrics SVG
         uses: lowlighter/metrics@v3.34
         with:
           config_timezone: Europe/Paris
@@ -35,4 +42,8 @@ jobs:
           plugin_notable_filter: stars:>1000
           plugin_notable_repositories: 'yes'
           plugin_stargazers: 'yes'
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ steps.app_token.outputs.token }}
+
+      - name: Dry-run push (optional)
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: git push --dry-run origin main   # just to verify push rights# deploy artifact to GitHub Pages :contentReference[oaicite:1]{index=1}
