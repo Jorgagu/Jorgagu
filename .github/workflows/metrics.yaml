@@ -26,6 +26,17 @@ jobs:
           application_id: ${{ secrets.METRICS_APP_ID }}
           application_private_key: ${{ secrets.METRICS_APP_PRIVATE_KEY }}
 
+      - name: Create output branch if missing
+        run: |
+          if ! git ls-remote --exit-code --heads origin output >/dev/null 2>&1; then
+            git switch --orphan output
+            git commit --allow-empty -m "init output branch"
+            git push origin output
+            git switch -
+          fi
+        env:
+          GH_TOKEN: ${{ steps.app_token.outputs.token }}
+
       - name: Generate metrics SVG
         uses: lowlighter/metrics@v3.34
         with:
