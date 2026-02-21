@@ -108,12 +108,12 @@
 
 ![GitHub Trophy](https://raw.githubusercontent.com/Jorgagu/Jorgagu/output/trophy.svg)
 
+### Top Contributions
+
+![Top Contributions](https://github-contributor-stats.vercel.app/api?username=Jorgagu&limit=5&theme=onedark&combine_all_yearly_contributions=true)
+
 ### GitHub Stats
 
 ![GitHub Stats](https://raw.githubusercontent.com/Jorgagu/Jorgagu/output/stats.svg)
 
 ![Top Languages](https://raw.githubusercontent.com/Jorgagu/Jorgagu/output/languages.svg)
-
-### GitHub Metrics
-
-![GitHub Metrics](https://raw.githubusercontent.com/Jorgagu/Jorgagu/output/github-metrics.svg)
