@@ -8,7 +8,7 @@ on:
   workflow_dispatch: {}          # manual trigger for testing
 
 permissions:
-  contents: read                # only need to checkout
+  contents: write               # push to output branch
   pages: write                  # to deploy to GitHub Pages
   id-token: write               # for provenance checks
 
@@ -29,6 +29,7 @@ jobs:
       - name: Generate metrics SVG
         uses: lowlighter/metrics@v3.34
         with:
+          committer_branch: output
           config_timezone: Europe/Paris
           plugin_achievements: 'yes'
           plugin_achievements_limit: 0
@@ -43,7 +44,3 @@ jobs:
           plugin_notable_repositories: 'yes'
           plugin_stargazers: 'yes'
           token: ${{ steps.app_token.outputs.token }}
-
-      - name: Dry-run push (optional)
-        if: ${{ github.event_name == 'workflow_dispatch' }}
-        run: git push --dry-run origin main   # just to verify push rights# deploy artifact to GitHub Pages :contentReference[oaicite:1]{index=1}
