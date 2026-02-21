@@ -2,18 +2,18 @@ name: Metrics
 
 on:
   push:
-    branches: [ main ]           # real runs on merges into main
+    branches: [ main ]
+  pull_request:
   schedule:
-    - cron: "0 0 * * *"          # daily updates at midnight CET
-  workflow_dispatch: {}          # manual trigger for testing
+    - cron: "0 0 * * *"
+  workflow_dispatch: {}
 
 permissions:
-  contents: write               # push to output branch
-  pages: write                  # to deploy to GitHub Pages
-  id-token: write               # for provenance checks
+  contents: write
 
 jobs:
-  build:
+  metrics:
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -57,3 +57,70 @@ jobs:
           plugin_notable_repositories: 'yes'
           plugin_stargazers: 'yes'
           token: ${{ steps.app_token.outputs.token }}
+
+  stats:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate stats card
+        uses: readme-tools/github-readme-stats-action@v1
+        with:
+          card: stats
+          options: username=${{ github.repository_owner }}&show_icons=true&theme=onedark
+          path: output/stats.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate top languages card
+        uses: readme-tools/github-readme-stats-action@v1
+        with:
+          card: top-langs
+          options: username=${{ github.repository_owner }}&theme=onedark&layout=compact
+          path: output/languages.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push to output branch
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin output:output
+          git switch output
+          cp output/stats.svg stats.svg 2>/dev/null || true
+          cp output/languages.svg languages.svg 2>/dev/null || true
+          git add stats.svg languages.svg
+          git diff --cached --quiet || git commit -m "chore: update stats cards"
+          git push origin output
+
+  trophy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v1.x
+
+      - name: Generate trophy SVG
+        run: |
+          git clone --depth 1 https://github.com/ryo-ma/github-profile-trophy.git /tmp/trophy
+          cd /tmp/trophy
+          deno run --allow-net --allow-env --allow-read --allow-write \
+            render_svg.ts ${{ github.repository_owner }} ${{ github.workspace }} onedark
+        env:
+          GITHUB_TOKEN1: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push to output branch
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin output:output
+          git switch output
+          cp ${{ github.workspace }}/trophy.svg trophy.svg 2>/dev/null || true
+          git add trophy.svg
+          git diff --cached --quiet || git commit -m "chore: update trophy card"
+          git push origin output
