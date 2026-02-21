@@ -34,7 +34,6 @@ jobs:
             git switch --orphan output
             git commit --allow-empty -m "init output branch"
             git push origin output
-            git switch -
           fi
         env:
           GH_TOKEN: ${{ steps.app_token.outputs.token }}
