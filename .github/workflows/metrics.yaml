@@ -30,6 +30,7 @@ jobs:
         uses: lowlighter/metrics@v3.34
         with:
           committer_branch: output
+          committer_token: ${{ steps.app_token.outputs.token }}
           config_timezone: Europe/Paris
           plugin_achievements: 'yes'
           plugin_achievements_limit: 0
