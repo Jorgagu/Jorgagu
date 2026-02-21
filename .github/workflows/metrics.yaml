@@ -26,14 +26,6 @@ jobs:
           path: output/stats.svg
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Generate top languages card
-        uses: readme-tools/github-readme-stats-action@v1
-        with:
-          card: top-langs
-          options: username=${{ github.repository_owner }}&theme=onedark&layout=compact
-          path: output/languages.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Push to output branch
         if: github.event_name != 'pull_request'
         run: |
@@ -42,9 +34,8 @@ jobs:
           git fetch origin output:output
           git switch output
           cp output/stats.svg stats.svg 2>/dev/null || true
-          cp output/languages.svg languages.svg 2>/dev/null || true
-          git add stats.svg languages.svg
-          git diff --cached --quiet || git commit -m "chore: update stats cards"
+          git add stats.svg
+          git diff --cached --quiet || git commit -m "chore: update stats card"
           git push origin output
 
   trophy:
