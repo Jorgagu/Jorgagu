@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-// Renders the top contributions card: repositories with the most commit
-// contributions across all contribution years, in the onedark style of the
-// other cards on the output branch.
+// Renders the top contributions card: repositories contributed to across all
+// contribution years, ranked by star count, in the onedark style of the other
+// cards on the output branch.
 
 import { writeFile } from "node:fs/promises";
 
@@ -42,7 +42,7 @@ for (const year of years) {
       user(login: $login) {
         contributionsCollection(from: $from, to: $to) {
           commitContributionsByRepository(maxRepositories: 100) {
-            repository { nameWithOwner owner { avatarUrl(size: 64) } }
+            repository { nameWithOwner stargazerCount owner { avatarUrl(size: 64) } }
             contributions { totalCount }
           }
         }
@@ -52,15 +52,20 @@ for (const year of years) {
   );
   for (const entry of data.user.contributionsCollection.commitContributionsByRepository) {
     const key = entry.repository.nameWithOwner;
-    const current = repos.get(key) ?? { avatarUrl: entry.repository.owner.avatarUrl, count: 0 };
+    const current = repos.get(key) ?? {
+      avatarUrl: entry.repository.owner.avatarUrl,
+      stars: entry.repository.stargazerCount,
+      count: 0,
+    };
     current.count += entry.contributions.totalCount;
+    current.stars = entry.repository.stargazerCount;
     repos.set(key, current);
   }
 }
 
 const top = [...repos.entries()]
-  .map(([name, { avatarUrl, count }]) => ({ name, avatarUrl, count }))
-  .sort((a, b) => b.count - a.count)
+  .map(([name, { avatarUrl, stars, count }]) => ({ name, avatarUrl, stars, count }))
+  .sort((a, b) => b.stars - a.stars)
   .slice(0, LIMIT);
 
 if (top.length === 0) {
@@ -86,18 +91,20 @@ const WIDTH = 467;
 const HEADER_HEIGHT = 50;
 const ROW_HEIGHT = 42;
 const height = HEADER_HEIGHT + top.length * ROW_HEIGHT + 15;
-const maxCount = Math.max(...top.map((r) => r.count));
+const maxStars = Math.max(...top.map((r) => r.stars));
 const BAR_WIDTH = 280;
+
+const formatStars = (n) => (n >= 1000 ? `${(n / 1000).toFixed(1).replace(/\.0$/, "")}k` : `${n}`);
 
 const rows = top
   .map((r, i) => {
     const y = HEADER_HEIGHT + i * ROW_HEIGHT;
-    const barW = Math.max(4, Math.round((r.count / maxCount) * BAR_WIDTH));
+    const barW = Math.max(4, Math.round((r.stars / Math.max(1, maxStars)) * BAR_WIDTH));
     return `  <g transform="translate(25, ${y})">
     <clipPath id="avatar-${i}"><circle cx="12" cy="12" r="12"/></clipPath>
     <image href="${r.avatar}" width="24" height="24" clip-path="url(#avatar-${i})"/>
     <text class="repo" x="36" y="16">${esc(truncate(r.name, 40))}</text>
-    <text class="count" x="${WIDTH - 50}" y="16" text-anchor="end">${r.count}</text>
+    <text class="count" x="${WIDTH - 50}" y="16" text-anchor="end">★ ${formatStars(r.stars)}</text>
     <rect x="36" y="24" width="${BAR_WIDTH}" height="6" rx="3" fill="#e4e2e2" fill-opacity="0.15"/>
     <rect x="36" y="24" width="${barW}" height="6" rx="3" fill="#8eb573"/>
   </g>`;
@@ -108,7 +115,7 @@ const svg = `<svg width="${WIDTH}" height="${height}" viewBox="0 0 ${WIDTH} ${he
   <style>
     .header { font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif; fill: #e4bf7a; }
     .repo { font: 600 13px 'Segoe UI', Ubuntu, Sans-Serif; fill: #df6d74; }
-    .count { font: 600 13px 'Segoe UI', Ubuntu, Sans-Serif; fill: #8eb573; }
+    .count { font: 600 13px 'Segoe UI', Ubuntu, Sans-Serif; fill: #e4bf7a; }
   </style>
   <rect x="0.5" y="0.5" width="${WIDTH - 1}" height="${height - 1}" rx="4.5" fill="#282c34" stroke="#e4e2e2"/>
   <text class="header" x="25" y="33">Top Contributions</text>
