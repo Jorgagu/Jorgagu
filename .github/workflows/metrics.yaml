@@ -33,10 +33,10 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin output:output
           git switch output
-          cp output/stats.svg stats.svg 2>/dev/null || true
+          cp output/stats.svg stats.svg
           git add stats.svg
           git diff --cached --quiet || git commit -m "chore: update stats card"
-          git push origin output
+          git push origin output || (git pull --rebase origin output && git push origin output)
 
   trophy:
     runs-on: ubuntu-latest
@@ -54,7 +54,7 @@ jobs:
           git clone --depth 1 https://github.com/ryo-ma/github-profile-trophy.git /tmp/trophy
           cd /tmp/trophy
           deno run --allow-net --allow-env --allow-read --allow-write \
-            render_svg.ts ${{ github.repository_owner }} ${{ github.workspace }}/trophy.svg onedark
+            render_svg.ts ${{ github.repository_owner }} ${{ runner.temp }}/trophy.svg onedark
         env:
           GITHUB_TOKEN1: ${{ secrets.GITHUB_TOKEN }}
 
@@ -65,7 +65,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin output:output
           git switch output
-          cp ${{ github.workspace }}/trophy.svg trophy.svg 2>/dev/null || true
+          cp ${{ runner.temp }}/trophy.svg trophy.svg
           git add trophy.svg
           git diff --cached --quiet || git commit -m "chore: update trophy card"
-          git push origin output
+          git push origin output || (git pull --rebase origin output && git push origin output)
