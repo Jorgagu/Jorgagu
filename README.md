@@ -110,7 +110,7 @@
 
 ### Top Contributions
 
-![Top Contributions](https://github-contributor-stats.vercel.app/api?username=Jorgagu&limit=5&theme=onedark&combine_all_yearly_contributions=true)
+![Top Contributions](https://raw.githubusercontent.com/Jorgagu/Jorgagu/output/top-contributions.svg)
 
 ### GitHub Stats
 
