@@ -28,7 +28,7 @@
     <text class="repo" x="36" y="16">documenso/documenso</text>
     <text class="count" x="417" y="16" text-anchor="end">★ 14.9k</text>
     <rect x="36" y="24" width="280" height="6" rx="3" fill="#e4e2e2" fill-opacity="0.15"/>
-    <rect x="36" y="24" width="68" height="6" rx="3" fill="#8eb573"/>
+    <rect x="36" y="24" width="69" height="6" rx="3" fill="#8eb573"/>
   </g>
   <g transform="translate(25, 176)">
     <clipPath id="avatar-3"><circle cx="12" cy="12" r="12"/></clipPath>
