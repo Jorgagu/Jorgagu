@@ -10,7 +10,7 @@
     <clipPath id="avatar-0"><circle cx="12" cy="12" r="12"/></clipPath>
     <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAIAAAAlC+aJAAAEo0lEQVR4nOyYa2wUVRTH//u0u9ulYO3TJpRSSLHUxSoNKai1lUfVtMUQgjyi0ZhofFRECEYQFRAVIjEGUhNTJY18wEhiLc9NFdtUXJVAaCpaLa3QuArUtYWWtrvdNae7ndnbzrQzOxMnTeb3ac6dc8+5/9lz554dIyY5ugCt0QVojS5Aa3QBWqML0BpdgNboArRGF6A1k16ASc1gC7PwfBEKs9Dpg69PzcjiGFSLtHwe3l0O43DAm36s+wTnOlULLo5KJZQUj20PRVYPwGbBrgqY/o/6VCnH5qWIj2NGZiVjZb46wcdFDQEFmSi7U2C8shgJNoHxnBSsugdFs2FSoYAVb2KjAfsfQ7JT4Jbdiml21P/KDK4tQNUalOSQZlcGas8rzK9YwMq76XFynGolSdyDn5OGht/xd0/EzExE1WqYR5JOT6RbLV4l+ZWVULITm5bwZu8Atn6Fd05EhTdgZxnMw1kMwI4yWM1MhE1LkOhQsgRlAraUMlX+USO83Th5AQ2/8YM5qVg9ny4ezsOCGaMjJNiwvkTJEhQIWDQTpbm82dGF6u8i19vq0DvI33rhAWRMxcbFwnFW5CMvPeZVxLoHTAaq5sT4iBkK4aVDaO+KmD398Adwb3bEtFlQ7mI2+umLJMkw/BYyGuC6HYfOIBTLQmL9BdYU0Jue41gLmi4yDge+R/s13pxm56+vXsczB2kKx5w0ChgTMQlIcTKF23MTO46N9gkE8fZx4el73FRg24/SRI6XSyisfGISsOFBOKPO3f0NuHJdwO2bVtT/Mnrw7GUcPkcXV2/QRI74OAorH/kCctNQ4eLNTh9qPKLOe9yMORTEG3V8rdd4cNnH3y13UXCZyBRgMmJnOYwjs0IhbK3FQEDU/9G7GPPT08yxNRDA67UUJDq4zBZQpoAnFmBu1Cvvy/NobBN1npWMJwt509uNvV+P9mlsw4mfeXNuOqWQgxwB6QnUn3H824ddIts0zGvLmMe5241+v4DbeyeZ8ReLKZFk5AjYuJj6M44PT6GrV9S5NBeLsnnT0y7at13yYd+3vOmw4hWRI08IyQLmZVAvwNF+DQd/FHW2W+nxcwSCePPIeME/bmIOjUfyKJ00pAmwmKgP4/5wBUPYUgv/kKj/5qVIjSqDz35A65Xx4vuHKGBwZDcbDZTOLGlt0gQ8vZB6Mo4jzfB0iDqvyI90b2F8ffhgzN4di6cDdc28mZMq8WyWICB1Cp69jzcHA3i/XtTz1WXUP0ez202tkRT21lNwjufuZ45LEcwTx60shi1q7wZDqF4n4Oa4hf7aG9h/icdb8PkZ3sxOwr5VfCmOJRjV0N3qwPpivHVUsYDCLMaMs2DGbRPPAvDTH9jwBdNjbi/DzCRJc8MUzZ5QgIQSuvSPjJRhgiEcPounaphDusKF+dPlxYl+NYkg4bvAHWk48DjTD4/DYIB6uKoGNP/JjNstcFciZYqkIGH+6sHaanRM8PikfdhwxlEhOayiDqHhxsbbjQte9Au1RhlTUZApKVeY3kE0teHGgIwpk5RJ/3VaF6A1ugCt0QVojS5Aa3QBWqML0BpdgNboArTmvwAAAP//h/8p8LiZjhQAAAAASUVORK5CYII=" width="24" height="24" clip-path="url(#avatar-0)"/>
     <text class="repo" x="36" y="16">nuxt/nuxt</text>
-    <text class="count" x="417" y="16" text-anchor="end">★ 60.9k</text>
+    <text class="count" x="417" y="16" text-anchor="end">★ 61k</text>
     <rect x="36" y="24" width="280" height="6" rx="3" fill="#e4e2e2" fill-opacity="0.15"/>
     <rect x="36" y="24" width="280" height="6" rx="3" fill="#8eb573"/>
   </g>
@@ -20,7 +20,7 @@
     <text class="repo" x="36" y="16">simple-icons/simple-icons</text>
     <text class="count" x="417" y="16" text-anchor="end">★ 26k</text>
     <rect x="36" y="24" width="280" height="6" rx="3" fill="#e4e2e2" fill-opacity="0.15"/>
-    <rect x="36" y="24" width="119" height="6" rx="3" fill="#8eb573"/>
+    <rect x="36" y="24" width="120" height="6" rx="3" fill="#8eb573"/>
   </g>
   <g transform="translate(25, 134)">
     <clipPath id="avatar-2"><circle cx="12" cy="12" r="12"/></clipPath>
